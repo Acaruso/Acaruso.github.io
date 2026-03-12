@@ -1,21 +1,13 @@
 ---
 layout: ../../../layouts/Layout.astro
-title: A Brief Introduction to RISC-V Assembly
+title: RISC-V Assembly
 ---
 
-# A Brief Introduction to RISC-V Assembly
+# RISC-V Assembly
 
-If you start exploring the xv6 source code, you'll quickly run into RISC-V assembly. The xv6 kernel is mostly written in C, but some low-level parts are written in assembly.
+Most of the xv6 kernel is written in C, but some parts are written in RISC-V assembly. Thus, it's useful to understand the basics of RISC-V assembly in order to understand xv6.
 
-Understanding a small amount of RISC-V assembly makes it much easier to follow what the kernel is doing.
-
-This post introduces the key concepts needed to read xv6's assembly code.
-
-The goal is not to teach the entire RISC-V instruction set, but rather to explain the parts that appear frequently in xv6.
-
----
-
-# What Is RISC-V?
+## What Is RISC-V?
 
 RISC-V is an **instruction set architecture (ISA)**.
 
@@ -32,19 +24,19 @@ Other examples of instruction set architectures include:
 - ARM
 - MIPS
 
-The version of xv6 used in modern courses runs on **64-bit RISC-V**.
+The current version of xv6 runs on the **64-bit RISC-V** ISA.
 
-Since most computers don't have a RISC-V CPU, xv6 is typically run using **QEMU**, which emulates a RISC-V machine.
+Since most computers don't have a RISC-V CPU, xv6 is run using **QEMU**, which emulates a RISC-V machine.
 
 ---
 
-# Sections
+## Sections
 
-At the top level, assembly programs are organized into **sections**.
+At the highest level, assembly code is organized into **sections**.
 
 Each section corresponds to a part of the final executable.
 
-The sections are:
+The most important sections are:
 
 - `.text`
   - executable instructions
@@ -55,9 +47,11 @@ The sections are:
 - `.rodata`
   - read-only constants
 
+If no section is specified, the assembler places instructions into the `.text` section by default.
+
 ---
 
-# Labels
+## Labels
 
 A **label** is a symbolic name for a memory address.
 
@@ -83,7 +77,7 @@ means "jump to the code located at the label `start`".
 
 ---
 
-# Harts (CPUs)
+## Harts (CPUs)
 
 In RISC-V terminology, a **hart** is a hardware thread. You can think of a hart as a CPU core.
 
@@ -95,7 +89,7 @@ The current hart's ID can be read from the register `mhartid`.
 
 ---
 
-# Registers
+## Registers
 
 RISC-V has 32 general-purpose registers.
 
@@ -123,7 +117,7 @@ Return values are returned via register `a0`.
 
 ---
 
-# Immediate Values
+## Immediate Values
 
 Many instructions contain **immediate values**.
 
@@ -139,7 +133,7 @@ This instruction uses the immediate value `10`. It adds `10` to the value in `x5
 
 ---
 
-# Basic Arithmetic Instructions
+## Basic Arithmetic Instructions
 
 ### Add Immediate
 
@@ -161,8 +155,6 @@ This is equivalent to:
 x6 = x5 + 10
 ```
 
----
-
 ### Add Immediate Word
 
 Syntax:
@@ -172,8 +164,6 @@ addiw <dest>, <source>, <immediate>
 ```
 
 This operates on the **lower 32 bits** of the register and sign-extends the result to 64 bits.
-
----
 
 ### Multiply
 
@@ -191,7 +181,7 @@ mul x5, x6, x7
 
 ---
 
-# Memory Instructions
+## Memory Instructions
 
 RISC-V uses **load/store instructions** to access memory.
 
@@ -215,8 +205,6 @@ Conceptually:
 dest = memory[base + offset]
 ```
 
----
-
 ### Store Doubleword
 
 Syntax:
@@ -231,9 +219,7 @@ Conceptually:
 memory[base + offset] = src
 ```
 
----
-
-# Function Calls
+## Function Calls
 
 RISC-V uses the instructions `jal` and `jalr` for function calls.
 
@@ -251,8 +237,6 @@ This instruction:
 - stores the return address in `dest`
 
 The return address is the instruction immediately following the `jalr`.
-
----
 
 ### Returning from a Function
 
@@ -272,7 +256,7 @@ which jumps to the return address stored in register `ra`.
 
 ---
 
-# Stack Frames
+## Stack Frames
 
 Functions typically allocate space on the stack.
 
@@ -302,7 +286,7 @@ ld s0, 8(sp)
 
 ---
 
-# Example: Compiled C Code
+## Example: Compiled C Code
 
 Consider this C function:
 
@@ -336,13 +320,11 @@ Since function arguments are passed in `a0`, this simply adds `3` to the input v
 
 ---
 
-# Example From xv6: `entry.S`
+## Example From xv6: `entry.S`
 
-Now that we've covered the basics, we can look at a small piece of xv6 assembly code, `kernel/entry.S`.
+Now that we've covered the basics, we can look at a small piece of xv6 assembly code, `kernel/entry.S`. `kernel/entry.S` contains the first instructions executed by xv6.
 
-`kernel/entry.S` contains the first instructions executed by xv6.
-
-You don't need to understand exactly what this file is doing right now, the important thing is just to see some examples of the concepts we've discussed so far.
+You don't need to understand exactly what `kernel/entry.S` is doing right now, the important thing is just to see some examples of the concepts we've discussed so far.
 
 ```asm
 .section .text
@@ -357,11 +339,11 @@ _entry:
     call start
 ```
 
-You can see examples of a few of the concepts we discussed so far:
+You can see examples of a few things we've discussed so far:
 
 - `.section .text`
   - creates the `.text` section
-  - the following instructions will go into the program's code section
+  - the following instructions will go into the executable's code section
 - `.global _entry`
   - makes the `_entry` label globally visible to the linker
   - this is necessary because other parts of xv6 reference this label
@@ -372,7 +354,7 @@ You can see examples of a few of the concepts we discussed so far:
 
 ---
 
-# Summary
+## Summary
 
 To start reading xv6's RISC-V assembly code, you mainly need to understand:
 

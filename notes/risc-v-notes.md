@@ -1,3 +1,8 @@
+- useful notes:
+  - lab 4: traps
+    - lots of RISC-V assembly notes
+  - RISC-V Assembly
+    - higher level/more asic
 # entry.S Notes
 
 - the goal of this code is to set up a stack for each “hart” (CPU)

@@ -13,5 +13,6 @@ This is a series exploring the xv6 operating system used by MIT for their operat
 ## Posts
 
 - [Getting Started With xv6](/blog/xv6/getting-started-with-xv6/)
-- [RISC-V](/blog/xv6/risc-v/)
+- [xv6 Compilation, Linking, and Loading](/blog/xv6/compilation/)
+- [RISC-V Assembly](/blog/xv6/risc-v/)
 - [How xv6 Starts Up](/blog/xv6/how-xv6-starts-up/)

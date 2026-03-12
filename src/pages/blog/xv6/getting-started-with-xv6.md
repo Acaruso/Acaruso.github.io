@@ -15,13 +15,13 @@ This guide shows how to install the required tools, build xv6, and run it inside
 
 # Prerequisites
 
-These instructions assume you are using **Linux** and have access to the `apt` package manager (Ubuntu, Debian, etc.). If you are using a different distribution, you will need to install equivalent packages using your system’s package manager.
+These instructions assume you are using Linux and have access to the `apt` package manager (Ubuntu, Debian, etc.). If you are using a different distribution, you will need to install equivalent packages using your system's package manager.
 
 ---
 
 # Install Dependencies
 
-First install the tools required to build and run xv6.
+First, install the dependencies needed to build and run xv6:
 
 ```bash
 sudo apt update
@@ -33,17 +33,17 @@ sudo apt-get install git build-essential gdb-multiarch \
 
 These packages provide:
 
-* **git** – used to clone the xv6 source code
-* **build-essential** – includes `gcc`, `make`, and other build tools
-* **gdb-multiarch** – a debugger that supports multiple CPU architectures
-* **qemu-system-misc** – installs QEMU with support for additional CPU architectures, including RISC-V
-* **gcc-riscv64-linux-gnu** and **binutils-riscv64-linux-gnu** – a cross-compiler toolchain for building RISC-V programs
+* **git** - used to clone the xv6 source code
+* **build-essential** - includes `gcc`, `make`, and other build tools
+* **gdb-multiarch** - a debugger that supports multiple CPU architectures
+* **qemu-system-misc** - installs QEMU with support for additional CPU architectures, including RISC-V
+* **gcc-riscv64-linux-gnu** and **binutils-riscv64-linux-gnu** - a cross-compiler toolchain for building RISC-V programs
 
 ---
 
-# Why RISC-V?
+# RISC-V
 
-The current version of xv6 runs on the **RISC-V architecture**.
+The current version of xv6 runs on the 64-bit RISC-V architecture.
 
 RISC-V is an open instruction set architecture (ISA). Other examples of ISAs include:
 
@@ -51,28 +51,26 @@ RISC-V is an open instruction set architecture (ISA). Other examples of ISAs inc
 * ARM
 * MIPS
 
-xv6 runs on a **64-bit RISC-V processor**, and the kernel is written in **LP64 C**, meaning:
+xv6 is written in **LP64 C**, meaning:
 
 * pointers and `long` values are **64 bits**
 * `int` values are **32 bits**
 
-Since most computers do not have a RISC-V CPU, we use an emulator to run xv6.
+Since most computers do not have a RISC-V CPU, we use the **QEMU** emulator to run xv6.
 
 ---
 
 # Running xv6 with QEMU
 
-We use **QEMU** to emulate a RISC-V computer.
+We use the QEMU emulator to run xv6.
 
-QEMU simulates the hardware required to run the operating system, including:
+QEMU emulates various pieces of hardware required to run xv6, including:
 
 * a RISC-V CPU
 * RAM
 * ROM containing boot code
 * a virtual hard disk
 * a serial connection for keyboard and screen
-
-This allows xv6 to run exactly as if it were running on real hardware.
 
 ---
 
@@ -84,7 +82,7 @@ Clone the MIT xv6 labs repository:
 git clone git://g.csail.mit.edu/xv6-labs-2023
 ```
 
-Then `cd` into the directory:
+`cd` into the directory:
 
 ```bash
 cd xv6-labs-2023
@@ -143,6 +141,6 @@ Ctrl-a x
 
 # Further Reading
 
-If you want to learn more about the RISC-V architecture used by xv6, a good reference is:
+If you want to learn more about the RISC-V architecture used by xv6, a good reference is [The RISC-V Reader](http://www.riscvbook.com/)
 
-[The RISC-V Reader](http://www.riscvbook.com/)
+You can also look at my [RISC-V overview](/blog/xv6/risc-v/)
