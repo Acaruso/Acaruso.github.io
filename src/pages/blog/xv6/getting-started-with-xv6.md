@@ -41,36 +41,21 @@ These packages provide:
 
 ---
 
-# RISC-V
+# QEMU
 
 The current version of xv6 runs on the 64-bit RISC-V architecture.
 
-RISC-V is an open instruction set architecture (ISA). Other examples of ISAs include:
+Since most computers do not have a RISC-V CPU, we need to use the **QEMU** emulator to run xv6.
 
-* x86 / x86-64
-* ARM
-* MIPS
+QEMU emulates various pieces of hardware, including:
 
-xv6 is written in **LP64 C**, meaning:
+- a RISC-V CPU
+- RAM
+- ROM containing boot code
+- a virtual hard disk
+- a serial connection for keyboard and screen
 
-* pointers and `long` values are **64 bits**
-* `int` values are **32 bits**
-
-Since most computers do not have a RISC-V CPU, we use the **QEMU** emulator to run xv6.
-
----
-
-# Running xv6 with QEMU
-
-We use the QEMU emulator to run xv6.
-
-QEMU emulates various pieces of hardware required to run xv6, including:
-
-* a RISC-V CPU
-* RAM
-* ROM containing boot code
-* a virtual hard disk
-* a serial connection for keyboard and screen
+We will then run xv6 inside of the emulated RISC-V computer provided by QEMU.
 
 ---
 
@@ -94,7 +79,7 @@ Each branch in the repository corresponds to a different lab assignment used in 
 
 # Building and Running xv6
 
-To build and run xv6 inside QEMU:
+To compile xv6, start QEMU, and run xv6 inside QEMU:
 
 ```bash
 make qemu
@@ -103,7 +88,7 @@ make qemu
 This command:
 - compiles the xv6 kernel and user programs
 - starts the QEMU emulator
-- boots the xv6 operating system
+- boots the xv6 operating system inside QEMU
 
 Once the system starts, you should be in the xv6 shell, and you should see the shell prompt, `$`.
 
@@ -113,34 +98,20 @@ Once the system starts, you should be in the xv6 shell, and you should see the s
 
 You can try a few simple commands.
 
-List files:
+To list files:
 
 ```bash
 ls
 ```
 
-Show running processes:
+To show currently running processes:
 
 ```
 Ctrl-p
 ```
-
-This prints the current process table.
-
----
-
-# Exiting the Emulator
 
 To exit QEMU and return to your host system:
 
 ```
 Ctrl-a x
 ```
-
----
-
-# Further Reading
-
-If you want to learn more about the RISC-V architecture used by xv6, a good reference is [The RISC-V Reader](http://www.riscvbook.com/)
-
-You can also look at my [RISC-V overview](/blog/xv6/risc-v/)
