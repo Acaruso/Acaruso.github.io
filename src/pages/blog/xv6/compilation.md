@@ -13,15 +13,15 @@ Before compilation begins, the preprocessor runs, and executes any macros define
 
 The `#include` macro is very important to understand.
 
-If we do `#include myheader.h` within `myfile.c`, this causes the preprocessor to copy-paste the contents of `myheader.h` into `myfile.c`.
+Let's consider an example. Let's say we have a file `foo.c` which contains the definition of a function `myfunction`. Let's say we also have a header file, `foo.h` which contains the function declaration, i.e. the function signature. If we want to call `myfunction` in some other file, `bar.c`, we need to `#include "foo.h"` in `bar.c`. But why?
 
-This is useful because at compilation time, each `.c` file is compiled seperately, and the compiler needs access to the declarations of all functions used within the file, in order to perform typechecking.
+When we `#include "foo.h"` in `bar.c`, this causes the preprocessor to copy-paste the contents of `foo.h` into `bar.c`.
 
-Thus, if we want to call `myfunction` within `myfile.c`, we need to provide the function declaration. If `myheader.h` contains the declaration for `myfunction`, we can accomplish this by doing `#include myheader.h` in `myfile.c`
+This is necessary because at compilation time, each `.c` file is compiled seperately. Before compiling the file, the compiler **typechecks** it, i.e. it checks that all functions are being called with the correct types. The compiler needs access to the declarations of all functions used within the file in order to typecheck it.
 
 ## Compiling Source Files Into Object Files
 
-At compilation time, the compiler converts each source file (in xv6, this is a `.c` or `.S` file) into an object file (`.o`).
+At compilation time, the compiler typechecks each source file, and if that succeeds, the compiler **compiles** each source file into an object file (`.o`).
 
 The object file contains various **sections**:
 - `.text` — contains machine code
@@ -77,7 +77,7 @@ Before a program can run, it must be loaded into memory, and the CPU must be tol
 
 ---
 
-## Loading the Kernel
+## Starting xv6
 
 When we run `make xv6` to start up xv6, the following sequence occurs:
 
